@@ -266,6 +266,11 @@ func (w *websitePickerJob) DoHealthCheck(parentCtx context.Context, website mode
 	defer cancel()
 
 	req, _ := http.NewRequestWithContext(childCtx, http.MethodGet, normalizeURL(website.WebsiteURL), nil)
+
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+	req.Header.Set("Accept-Language", "en-US,en;q=0.5")
+
 	start := time.Now()
 	resp, err := w.httpClient.Do(req)
 	latency := time.Since(start)
